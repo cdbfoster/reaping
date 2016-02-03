@@ -1,0 +1,8 @@
+[package]
+name = "reaping"
+version = "0.1.0"
+authors = ["Chris Foster <cdbfoster@gmail.com>"]
+
+[dependencies]
+sdl2 = "0.12"
+time = "0.1.34"
