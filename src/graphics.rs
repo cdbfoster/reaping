@@ -40,7 +40,7 @@ impl GraphicRenderer {
         for view in views.iter().rev() {
             let view_data = view.get_view_data();
 
-            for graphic_object in view_data.graphic_objects.iter().rev() {
+            for graphic_object in view_data.graphic_objects.iter() {
                 graphic_object.draw(context);
             }
         }
