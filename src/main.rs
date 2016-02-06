@@ -28,6 +28,9 @@ mod math;
 mod timer;
 mod view;
 
+#[macro_use]
+mod log;
+
 use context::Context;
 use graphics::GraphicRenderer;
 use input::{Input, InputTranslator};
@@ -123,8 +126,8 @@ fn main() {
 
         // Calculate FPS
         if fps_timer.sprung() {
+            debug!("FPS: {}", frames_rendered);
             context.fps = frames_rendered;
-
             frames_rendered = 0;
             fps_timer.reset_with_overflow();
         }
