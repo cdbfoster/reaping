@@ -18,12 +18,15 @@
 //
 
 use sdl2;
+use sdl2_image;
 
 pub struct Context {
     pub sdl_context: sdl2::Sdl,
     pub sdl_event_pump: sdl2::EventPump,
     pub sdl_video: sdl2::VideoSubsystem,
     pub sdl_renderer: sdl2::render::Renderer<'static>,
+
+    pub sdl_image_context: sdl2_image::Sdl2ImageContext,
 
     pub fps: u32,
 }
@@ -49,11 +52,15 @@ impl Context {
 
         sdl_renderer.set_logical_size(width, height);
 
+        let sdl_image_context = sdl2_image::init(sdl2_image::INIT_PNG).unwrap();
+
         Context {
             sdl_context: sdl_context,
             sdl_event_pump: sdl_event_pump,
             sdl_video: sdl_video,
             sdl_renderer: sdl_renderer,
+
+            sdl_image_context: sdl_image_context,
 
             fps: 0,
         }

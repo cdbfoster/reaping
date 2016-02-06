@@ -18,6 +18,7 @@
 //
 
 extern crate sdl2;
+extern crate sdl2_image;
 extern crate time;
 
 #[macro_use]
