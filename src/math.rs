@@ -114,6 +114,7 @@ impl Div<f32> for Vector2 {
     }
 }
 
+#[derive(Copy, Clone, Debug)]
 pub struct Transform {
     pub scale: Vector2,
     pub rotation: f32,
