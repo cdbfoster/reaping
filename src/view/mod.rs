@@ -24,7 +24,6 @@ use input::Input;
 
 pub trait View {
     fn get_view_data(&self) -> &ViewData;
-    fn get_view_data_mut(&mut self) -> &mut ViewData; // XXX Necessary?
 
     /// Any input returned will be passed to the next view.
     fn update(&mut self, context: &Context, input: Vec<Input>) -> (Option<ViewAction>, Vec<Input>);
