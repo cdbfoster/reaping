@@ -40,7 +40,7 @@ impl Vector2 {
         }
     }
 
-    pub fn transform(&self, t: Transform) -> Vector2 {
+    pub fn transform(&self, t: &Transform) -> Vector2 {
         Vector2::new(
             self.x * t.scale.x * t.rotation.cos() - self.y * t.scale.y * t.rotation.sin() + t.position.x,
             self.x * t.scale.x * t.rotation.sin() + self.y * t.scale.y * t.rotation.cos() + t.position.y,
