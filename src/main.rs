@@ -35,7 +35,7 @@ use context::Context;
 use graphics::GraphicRenderer;
 use input::{Input, InputTranslator};
 use timer::Timer;
-use view::{View, ViewAction};
+use view::{MainMenuView, View, ViewAction};
 
 fn main() {
     let mut context = Context::new();
@@ -44,7 +44,7 @@ fn main() {
 
     let graphic_renderer = GraphicRenderer::new();
 
-    let mut views = Vec::<Box<View>>::new();
+    let mut views: Vec<Box<View>> = vec![Box::new(MainMenuView::new())];
     let mut input = Vec::new();
 
     // Seed the timers

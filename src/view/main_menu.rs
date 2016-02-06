@@ -18,38 +18,29 @@
 //
 
 use context::Context;
-use graphics::GraphicObject;
 use input::Input;
-//use sound::SoundObject;
+use view::{View, ViewAction, ViewData};
 
-pub trait View {
-    fn get_view_data(&self) -> &ViewData;
-
-    /// Any input returned will be passed to the next view.
-    fn update(&mut self, context: &Context, input: Vec<Input>) -> (Option<ViewAction>, Vec<Input>);
+pub struct MainMenuView {
+    view_data: ViewData,   
 }
 
-pub struct ViewData {
-    pub graphic_objects: Vec<Box<GraphicObject>>,
-    //pub sound_objects: Vec<SoundObject>,
-}
-
-impl ViewData {
-    pub fn new() -> ViewData {
-        ViewData {
-            graphic_objects: Vec::new(),
-            //sound_objects: Vec::new(),
+impl MainMenuView {
+    pub fn new() -> MainMenuView {
+        let mut view_data = ViewData::new();
+        
+        MainMenuView {
+            view_data: view_data,
         }
     }
 }
 
-pub enum ViewAction {
-    SetView(Box<View>),
-    AddView(Box<View>),
-    RemoveSelf,
-    ExitGame,
+impl View for MainMenuView {
+    fn get_view_data(&self) -> &ViewData {
+        &self.view_data
+    }
+    
+    fn update(&mut self, context: &Context, input: Vec<Input>) -> (Option<ViewAction>, Vec<Input>) {
+        (None, Vec::new())
+    }
 }
-
-pub use self::main_menu::MainMenuView;
-
-mod main_menu;
