@@ -35,8 +35,9 @@ impl Context {
         let sdl_video = sdl_context.video().unwrap();
 
         // XXX Read window options out of a config file
-        let sdl_renderer = {
-            let mut builder = sdl_video.window("The Reaping", 640, 480);
+        let (width, height) = (1366, 768);
+        let mut sdl_renderer = {
+            let mut builder = sdl_video.window("The Reaping", width, height);
 
             builder.opengl();
 
@@ -45,6 +46,8 @@ impl Context {
             let sdl_window = builder.build().unwrap();
             sdl_window.renderer().accelerated().build().unwrap()
         };
+
+        sdl_renderer.set_logical_size(width, height);
 
         Context {
             sdl_context: sdl_context,
