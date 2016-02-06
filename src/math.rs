@@ -19,6 +19,8 @@
 
 use std::ops::{Add, Sub, Mul, Neg, Div};
 
+use sdl2::rect::Rect as SdlRectangle;
+
 #[derive(Copy, Clone, Debug)]
 pub struct Vector2 {
     pub x: f32,
@@ -136,5 +138,31 @@ impl Transform {
             rotation: 0.0,
             position: Vector2::zero(),
         }
+    }
+}
+
+#[derive(Copy, Clone, Debug)]
+pub struct Rectangle {
+    pub position: Vector2,
+    pub size: Vector2,
+}
+
+impl Rectangle {
+    pub fn new(position: Vector2, size: Vector2) -> Rectangle {
+        Rectangle {
+            position: position,
+            size: size,
+        }
+    }
+
+    pub fn transform(&self, t: &Transform) -> Rectangle {
+        Rectangle::new(self.position + t.position, self.size * t.scale)
+    }
+
+    pub fn to_sdl_rectangle(&self) -> SdlRectangle {
+        SdlRectangle::new(
+            self.position.x.round() as i32, self.position.y.round() as i32,
+            self.size.x.round() as u32, self.size.x.round() as u32
+        ).unwrap().unwrap()
     }
 }
