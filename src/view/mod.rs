@@ -35,6 +35,15 @@ pub struct ViewData {
     //pub sound_objects: Vec<SoundObject>,
 }
 
+impl ViewData {
+    pub fn new() -> ViewData {
+        ViewData {
+            graphic_objects: Vec::new(),
+            //sound_objects: Vec::new(),
+        }
+    }
+}
+
 pub enum ViewAction {
     SetView(Box<View>),
     AddView(Box<View>),
