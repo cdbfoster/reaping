@@ -17,6 +17,8 @@
 // Copyright 2016 Chris Foster
 //
 
+use sdl2::pixels::Color;
+
 use context::Context;
 use view::View;
 
@@ -32,6 +34,7 @@ impl GraphicRenderer {
     }
 
     pub fn render(&self, context: &mut Context, views: &Vec<Box<View>>) {
+        context.sdl_renderer.set_draw_color(Color::RGB(0, 0, 0));
         context.sdl_renderer.clear();
 
         for view in views.iter().rev() {
