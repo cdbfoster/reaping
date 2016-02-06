@@ -20,6 +20,9 @@
 extern crate sdl2;
 extern crate time;
 
+#[macro_use]
+mod log;
+
 mod context;
 mod graphics;
 mod input;
@@ -27,9 +30,6 @@ mod math;
 //mod sound;
 mod timer;
 mod view;
-
-#[macro_use]
-mod log;
 
 use context::Context;
 use graphics::GraphicRenderer;
