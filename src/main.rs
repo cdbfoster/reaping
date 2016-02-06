@@ -113,6 +113,7 @@ fn main() {
                 new_views
             };
 
+            input.clear();
             logic_timer.reset_with_overflow();
         }
 
