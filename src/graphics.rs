@@ -32,6 +32,8 @@ impl GraphicRenderer {
     }
 
     pub fn render(&self, context: &mut Context, views: &Vec<Box<View>>) {
+        context.sdl_renderer.clear();
+
         for view in views.iter().rev() {
             let view_data = view.get_view_data();
 
@@ -40,7 +42,6 @@ impl GraphicRenderer {
             }
         }
 
-        context.sdl_renderer.clear();
         context.sdl_renderer.present();
     }
 }
