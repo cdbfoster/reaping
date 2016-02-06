@@ -81,6 +81,17 @@ impl Mul<f32> for Vector2 {
     }
 }
 
+impl Mul for Vector2 {
+    type Output = Vector2;
+
+    fn mul(self, rhs: Vector2) -> Vector2 {
+        Vector2 {
+            x: self.x * rhs.x,
+            y: self.y * rhs.y,
+        }
+    }
+}
+
 impl Neg for Vector2 {
     type Output = Vector2;
 
