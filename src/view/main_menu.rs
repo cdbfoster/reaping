@@ -18,28 +18,26 @@
 //
 
 use context::Context;
+use graphics::Sprite;
 use input::Input;
+use math::{Transform, Vector2};
 use view::{View, ViewAction, ViewData};
 
-pub struct MainMenuView {
-    view_data: ViewData,   
-}
+pub struct MainMenuView;
 
 impl MainMenuView {
-    pub fn new() -> MainMenuView {
-        let mut view_data = ViewData::new();
-        
-        MainMenuView {
-            view_data: view_data,
-        }
+    pub fn new(context: &Context) -> MainMenuView {
+        MainMenuView
     }
 }
 
 impl View for MainMenuView {
-    fn get_view_data(&self) -> &ViewData {
-        &self.view_data
+    fn get_view_data(&self) -> ViewData {
+        ViewData {
+            graphic_objects: Vec::new(),
+        }
     }
-    
+
     fn update(&mut self, context: &Context, input: Vec<Input>) -> (Option<ViewAction>, Vec<Input>) {
         (None, Vec::new())
     }

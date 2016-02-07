@@ -23,24 +23,15 @@ use input::Input;
 //use sound::SoundObject;
 
 pub trait View {
-    fn get_view_data(&self) -> &ViewData;
+    fn get_view_data(&self) -> ViewData;
 
     /// Any input returned will be passed to the next view.
     fn update(&mut self, context: &Context, input: Vec<Input>) -> (Option<ViewAction>, Vec<Input>);
 }
 
-pub struct ViewData {
-    pub graphic_objects: Vec<Box<GraphicObject>>,
-    //pub sound_objects: Vec<SoundObject>,
-}
-
-impl ViewData {
-    pub fn new() -> ViewData {
-        ViewData {
-            graphic_objects: Vec::new(),
-            //sound_objects: Vec::new(),
-        }
-    }
+pub struct ViewData<'a> {
+    pub graphic_objects: Vec<&'a GraphicObject>,
+    //pub sound_objects: Vec<&'a SoundObject>,
 }
 
 pub enum ViewAction {

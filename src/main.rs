@@ -45,7 +45,7 @@ fn main() {
 
     let graphic_renderer = GraphicRenderer::new();
 
-    let mut views: Vec<Box<View>> = vec![Box::new(MainMenuView::new())];
+    let mut views: Vec<Box<View>> = vec![Box::new(MainMenuView::new(&context))];
     let mut input = Vec::new();
 
     // Seed the timers
