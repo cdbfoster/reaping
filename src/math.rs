@@ -48,6 +48,13 @@ impl Vector2 {
             self.x * t.scale.x * t.rotation.sin() + self.y * t.scale.y * t.rotation.cos() + t.position.y,
         )
     }
+
+    pub fn abs(&self) -> Vector2 {
+        Vector2::new(
+            self.x.abs(),
+            self.y.abs(),
+        )
+    }
 }
 
 impl Add for Vector2 {
