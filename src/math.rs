@@ -151,25 +151,62 @@ impl Transform {
 #[derive(Copy, Clone, Debug)]
 pub struct Rectangle {
     pub position: Vector2,
-    pub size: Vector2,
+
+    size: Vector2,
 }
 
 impl Rectangle {
-    pub fn new(position: Vector2, size: Vector2) -> Rectangle {
-        Rectangle {
-            position: position,
-            size: size,
+    pub fn new(position: Vector2, size: Vector2) -> Option<Rectangle> {
+        if size.x < 0.0 || size.y < 0.0 {
+            None
+        } else {
+            Some(Rectangle {
+                position: position,
+                size: size,
+            })
         }
     }
 
-    pub fn transform(&self, t: &Transform) -> Rectangle {
-        Rectangle::new(self.position + t.position, self.size * t.scale)
+    pub fn get_size(&self) -> Vector2 {
+        self.size
+    }
+
+    pub fn set_size(&mut self, size: Vector2) {
+        self.size = Vector2::new(
+            if size.x < 0.0 { 0.0 } else { size.x },
+            if size.y < 0.0 { 0.0 } else { size.y },
+        );
+    }
+
+    /// Returns the scaled and positioned rectangle and bools to indicate a
+    /// horizontal or vertical flip, respectively.  Does not apply rotation.
+    pub fn transform(&self, t: &Transform) -> (Rectangle, (bool, bool)) {
+        let new_size = self.size * t.scale.abs();
+        let new_position = self.position + t.position + ((self.size - new_size) / 2.0);
+
+        (
+            Rectangle::new(new_position, new_size).unwrap(),
+            (
+                t.scale.x < 0.0,
+                t.scale.y < 0.0,
+            ),
+        )
     }
 
     pub fn to_sdl_rectangle(&self) -> SdlRectangle {
+        let (size_x, size_y) = (
+            self.size.x.round() as u32,
+            self.size.y.round() as u32,
+        );
+
+        let (width, height) = (
+            if size_x == 0 { 1 } else { size_x },
+            if size_y == 0 { 1 } else { size_y },
+        );
+
         SdlRectangle::new(
             self.position.x.round() as i32, self.position.y.round() as i32,
-            self.size.x.round() as u32, self.size.x.round() as u32
+            width, height,
         ).unwrap().unwrap()
     }
 }
