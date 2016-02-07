@@ -134,7 +134,7 @@ impl Transform {
 
     pub fn zero() -> Transform {
         Transform {
-            scale: Vector2::zero(),
+            scale: Vector2::new(1.0, 1.0),
             rotation: 0.0,
             position: Vector2::zero(),
         }
