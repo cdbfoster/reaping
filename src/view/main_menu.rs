@@ -17,28 +17,63 @@
 // Copyright 2016 Chris Foster
 //
 
+use sdl2::pixels::Color;
+use sdl2::rect::Rect as SdlRectangle;
+
 use context::Context;
-use graphics::Sprite;
+use graphics::{GraphicObject, Sprite};
 use input::Input;
 use math::{Transform, Vector2};
 use view::{View, ViewAction, ViewData};
 
-pub struct MainMenuView;
+pub struct MainMenuView {
+    backdrop: Backdrop,
+}
 
 impl MainMenuView {
     pub fn new(context: &Context) -> MainMenuView {
-        MainMenuView
+        MainMenuView {
+            backdrop: Backdrop::new(Color::RGB(64, 155, 0)),
+        }
     }
 }
 
 impl View for MainMenuView {
     fn get_view_data(&self) -> ViewData {
         ViewData {
-            graphic_objects: Vec::new(),
+            graphic_objects: vec![
+                &self.backdrop,
+            ],
         }
     }
 
     fn update(&mut self, context: &Context, input: Vec<Input>) -> (Option<ViewAction>, Vec<Input>) {
         (None, Vec::new())
+    }
+}
+
+struct Backdrop {
+    pub color: Color,
+}
+
+impl Backdrop {
+    pub fn new(color: Color) -> Backdrop {
+        Backdrop {
+            color: color,
+        }
+    }
+}
+
+impl GraphicObject for Backdrop {
+    fn draw(&self, context: &mut Context) {
+        context.sdl_renderer.set_draw_color(self.color);
+
+        let (width, height) = context.sdl_renderer.logical_size();
+        context.sdl_renderer.fill_rect(
+            SdlRectangle::new(
+                0, 0,
+                width, height,
+            ).unwrap().unwrap()
+        );
     }
 }
