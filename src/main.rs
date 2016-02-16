@@ -61,10 +61,10 @@ fn main() {
     'main: loop {
         // Update the timers
         let elapsed_time = (time::precise_time_ns() - old_time) as i64;
-        input_timer.elapsed(elapsed_time);
-        logic_timer.elapsed(elapsed_time);
-        render_timer.elapsed(elapsed_time);
-        fps_timer.elapsed(elapsed_time);
+        input_timer.elapse(elapsed_time);
+        logic_timer.elapse(elapsed_time);
+        render_timer.elapse(elapsed_time);
+        fps_timer.elapse(elapsed_time);
         old_time += elapsed_time as u64;
 
         // Gather input
@@ -137,10 +137,10 @@ fn main() {
         // Wait until the closest timer minus what it took to get here
         let sleep = {
             let remainders = vec![
-                input_timer.remainder(),
-                logic_timer.remainder(),
-                render_timer.remainder(),
-                fps_timer.remainder(),
+                input_timer.remainder_ns(),
+                logic_timer.remainder_ns(),
+                render_timer.remainder_ns(),
+                fps_timer.remainder_ns(),
             ];
 
             let min = *remainders.iter().min().unwrap() - (time::precise_time_ns() - old_time) as i64;

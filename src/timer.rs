@@ -30,7 +30,7 @@ impl Timer {
         }
     }
 
-    pub fn elapsed(&mut self, elapsed_ns: i64) {
+    pub fn elapse(&mut self, elapsed_ns: i64) {
         self.remainder_ns -= elapsed_ns;
     }
 
@@ -46,7 +46,11 @@ impl Timer {
         self.remainder_ns += self.interval_ns as i64;
     }
 
-    pub fn remainder(&self) -> i64 {
+    pub fn remainder_ns(&self) -> i64 {
         self.remainder_ns
+    }
+
+    pub fn elapsed_ns(&self) -> i64 {
+        self.interval_ns as i64 - self.remainder_ns
     }
 }
