@@ -17,12 +17,15 @@
 // Copyright 2016 Chris Foster
 //
 
+use std::collections::HashMap;
 use std::path::Path;
 use std::rc::Rc;
 
 use sdl2::pixels::Color;
 use sdl2::render::{Texture, TextureQuery};
 use sdl2_image::LoadTexture;
+use sdl2_ttf::Font as SdlFont;
+use sdl2_ttf::Sdl2TtfContext;
 
 use context::Context;
 use math::{Rectangle, Transform, Vector2};
@@ -138,5 +141,59 @@ impl GraphicObject for Sprite {
             None,
             flip,
         );
+    }
+}
+
+#[derive(PartialEq, Eq, Hash, Clone)]
+pub struct Font {
+    pub path: &'static str,
+    pub size: u16,
+}
+
+pub struct FontRenderer {
+    sdl_ttf_context: Sdl2TtfContext,
+
+    cached_fonts: HashMap<Font, SdlFont>,
+}
+
+impl FontRenderer {
+    pub fn new(sdl_ttf_context: Sdl2TtfContext) -> FontRenderer {
+        FontRenderer {
+            sdl_ttf_context: sdl_ttf_context,
+
+            cached_fonts: HashMap::new(),
+        }
+    }
+
+    pub fn load_font(&mut self, font_path: &'static str, font_size: u16) -> Font{
+        let font = Font {
+            path: font_path,
+            size: font_size,
+        };
+
+        if let Some(_) = self.cached_fonts.get(&font) {
+            return font;
+        }
+
+        match self.sdl_ttf_context.load_font(Path::new(font.path), font.size).ok()
+        {
+            Some(sdl_font) => {
+                self.cached_fonts.insert(font.clone(), sdl_font);
+                font
+            },
+            None => {
+                panic!("Could not load font {}, {}!", font.path, font.size);
+            }
+        }
+    }
+
+    pub fn render_sprite(&self, context: &Context, font: &Font, text: &str, color: Color) -> Option<Sprite> {
+        if let Some(sdl_font) = self.cached_fonts.get(&font) {
+            return sdl_font.render(text).blended(color).ok()
+                .and_then(|surface| context.sdl_renderer.create_texture_from_surface(&surface).ok())
+                .map(|texture| Sprite::new(texture, None, None))
+        } else {
+            None
+        }
     }
 }

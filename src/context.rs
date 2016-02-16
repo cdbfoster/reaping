@@ -19,6 +19,9 @@
 
 use sdl2;
 use sdl2_image;
+use sdl2_ttf;
+
+use graphics::FontRenderer;
 
 pub struct Context {
     pub sdl_context: sdl2::Sdl,
@@ -27,6 +30,8 @@ pub struct Context {
     pub sdl_renderer: sdl2::render::Renderer<'static>,
 
     pub sdl_image_context: sdl2_image::Sdl2ImageContext,
+
+    pub font_renderer: FontRenderer,
 
     pub fps: u32,
 }
@@ -54,6 +59,12 @@ impl Context {
 
         let sdl_image_context = sdl2_image::init(sdl2_image::INIT_PNG).unwrap();
 
+        let font_renderer = {
+            let sdl_ttf_context = sdl2_ttf::init().unwrap();
+
+            FontRenderer::new(sdl_ttf_context)
+        };
+
         Context {
             sdl_context: sdl_context,
             sdl_event_pump: sdl_event_pump,
@@ -61,6 +72,8 @@ impl Context {
             sdl_renderer: sdl_renderer,
 
             sdl_image_context: sdl_image_context,
+
+            font_renderer: font_renderer,
 
             fps: 0,
         }
