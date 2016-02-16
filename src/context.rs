@@ -50,7 +50,7 @@ impl Context {
             sdl_window.renderer().accelerated().build().unwrap()
         };
 
-        sdl_renderer.set_logical_size(width, height);
+        sdl_renderer.set_logical_size(width, height).ok();
 
         let sdl_image_context = sdl2_image::init(sdl2_image::INIT_PNG).unwrap();
 
