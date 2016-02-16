@@ -129,7 +129,7 @@ fn main() {
 
         // Calculate FPS
         if fps_timer.sprung() {
-            debug!("FPS: {}", frames_rendered);
+            debug!("FPS: {:.1}", frames_rendered as f32 / (fps_timer.elapsed_ns() as f32 / 1_000_000_000.0));
             context.fps = frames_rendered;
             frames_rendered = 0;
             fps_timer.reset_with_overflow();
