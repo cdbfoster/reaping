@@ -86,7 +86,7 @@ fn main() {
                 let mut new_views = Vec::new();
 
                 'view: for mut view in views {
-                    let (result, pass_input) = view.update(&context, input);
+                    let (result, pass_input) = view.update(&context, input, logic_timer.elapsed_ns());
                     input = pass_input;
 
                     match result {

@@ -47,7 +47,7 @@ impl View for MainMenuView {
         }
     }
 
-    fn update(&mut self, context: &Context, input: Vec<Input>) -> (Option<ViewAction>, Vec<Input>) {
+    fn update(&mut self, context: &Context, input: Vec<Input>, elapsed_ns: i64) -> (Option<ViewAction>, Vec<Input>) {
         (None, Vec::new())
     }
 }

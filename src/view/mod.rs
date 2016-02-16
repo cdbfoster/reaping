@@ -26,7 +26,7 @@ pub trait View {
     fn get_view_data(&self) -> ViewData;
 
     /// Any input returned will be passed to the next view.
-    fn update(&mut self, context: &Context, input: Vec<Input>) -> (Option<ViewAction>, Vec<Input>);
+    fn update(&mut self, context: &Context, input: Vec<Input>, elapsed_ns: i64) -> (Option<ViewAction>, Vec<Input>);
 }
 
 pub struct ViewData<'a> {
