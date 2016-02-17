@@ -50,7 +50,7 @@ impl MainMenuView {
         let info_font = context.font_renderer.load_font("assets/fonts/jim_teacher.ttf", (0.035 * screen_size.y) as u16);
 
         let button_size = Vector2::new(
-            0.4 * screen_size.x,
+            0.5 * screen_size.x,
             0.1 * screen_size.y,
         );
 
