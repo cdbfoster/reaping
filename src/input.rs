@@ -19,6 +19,7 @@
 
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
+use sdl2::mouse::Mouse;
 
 use math::Vector2;
 
@@ -59,6 +60,7 @@ impl InputTranslator {
             Event::KeyDown { keycode: Some(Keycode::Right), .. } => {
                 Some(Input::Right)
             },
+            Event::MouseButtonDown { mouse_btn: Mouse::Left, .. } |
             Event::KeyDown { keycode: Some(Keycode::Return), .. } => {
                 Some(Input::Enter)
             },
