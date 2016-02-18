@@ -23,6 +23,7 @@ use sdl2::mouse::Mouse;
 
 use math::{Rectangle, Vector2};
 
+#[derive(PartialEq)]
 pub enum Input {
     Up,
     Down,

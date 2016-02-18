@@ -21,7 +21,7 @@ use std::ops::{Add, Sub, Mul, Neg, Div};
 
 use sdl2::rect::Rect as SdlRectangle;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Vector2 {
     pub x: f32,
     pub y: f32,

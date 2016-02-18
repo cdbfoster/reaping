@@ -121,11 +121,13 @@ impl MainMenuView {
 
 impl View for MainMenuView {
     fn get_view_data(&self) -> ViewData {
-        ViewData {
-            graphic_objects: vec![
-                &self.backdrop,
+        let mut graphic_objects = vec![
+            &self.backdrop as &GraphicObject,
+        ];
 
-                &self.title,
+        if !self.in_child_view {
+            graphic_objects.extend(vec![
+                &self.title as &GraphicObject,
 
                 &self.play_button,
                 &self.options_button,
@@ -134,11 +136,23 @@ impl View for MainMenuView {
 
                 &self.version,
                 &self.author,
-            ],
+            ].iter());
+        }
+
+        ViewData {
+            graphic_objects: graphic_objects,
         }
     }
 
     fn update(&mut self, context: &mut Context, input: Vec<Input>, elapsed_ns: i64) -> (Option<ViewAction>, Vec<Input>) {
+        if self.in_child_view {
+            if input.iter().find(|input| **input == Input::Pause).is_some() {
+                self.in_child_view = false;
+            } else {
+                return (None, Vec::new());
+            }
+        }
+
         let mut menu_buttons: Vec<&mut MenuButton> = vec![
             &mut self.play_button,
             &mut self.options_button,
@@ -149,7 +163,7 @@ impl View for MainMenuView {
         let (highlighted, selected) = input::menu(
             &menu_buttons.iter().map(|x| *x as &Button).collect(), // Get a list of immutable buttons
             self.highlighted,
-            &input
+            &input,
         );
 
         self.highlighted = highlighted;
