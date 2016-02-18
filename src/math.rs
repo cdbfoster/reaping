@@ -178,6 +178,13 @@ impl Rectangle {
         );
     }
 
+    pub fn contains(&self, point: Vector2) -> bool {
+        point.x >= self.position.x &&
+        point.y >= self.position.y &&
+        point.x < self.position.x + self.size.x &&
+        point.y < self.position.y + self.size.y
+    }
+
     /// Returns the scaled and positioned rectangle and bools to indicate a
     /// horizontal or vertical flip, respectively.  Does not apply rotation.
     pub fn transform(&self, t: &Transform) -> (Rectangle, (bool, bool)) {

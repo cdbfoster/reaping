@@ -21,7 +21,7 @@ use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::mouse::Mouse;
 
-use math::Vector2;
+use math::{Rectangle, Vector2};
 
 pub enum Input {
     Up,
@@ -74,4 +74,72 @@ impl InputTranslator {
             _ => None,
         }
     }
+}
+
+pub trait Button {
+    fn get_region(&self) -> Rectangle;
+}
+
+/// Returns the new highlighted item and the selected item
+pub fn menu(items: &Vec<&Button>, mut highlighted: Option<usize>, input: &Vec<Input>) -> (Option<usize>, Option<usize>) {
+    let mouse_position = input.iter().filter(|input| match **input {
+        Input::MouseMotion(_) => true,
+        _ => false,
+    }).map(|input| match *input {
+        Input::MouseMotion(position) => position,
+        _ => panic!("Shouldn't be anything but MouseMotion in this list..."),
+    }).last();
+
+    let mut mouse_highlighted = None;
+    for (index, button) in items.iter().enumerate() {
+        match mouse_position {
+            Some(ref position) => {
+                if button.get_region().contains(*position) {
+                    mouse_highlighted = Some(index);
+                }
+            },
+            None => (),
+        }
+    }
+
+    if mouse_position.is_some() {
+        highlighted = mouse_highlighted;
+    }
+
+    let mut selected = None;
+
+    for i in input.iter() {
+        match *i {
+            Input::Up => {
+                highlighted = match highlighted {
+                    Some(index) => {
+                        if index == 0 {
+                            Some(items.len() - 1)
+                        } else {
+                            Some(index - 1)
+                        }
+                    },
+                    None => { Some(0) },
+                };
+            },
+            Input::Down => {
+                highlighted = match highlighted {
+                    Some(index) => {
+                        if index == items.len() - 1 {
+                            Some(0)
+                        } else {
+                            Some(index + 1)
+                        }
+                    },
+                    None => { Some(0) },
+                };
+            },
+            Input::Enter => {
+                selected = highlighted;
+            }
+            _ => (),
+        }
+    }
+
+    (highlighted, selected)
 }
