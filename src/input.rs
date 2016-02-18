@@ -82,12 +82,9 @@ pub trait Button {
 
 /// Returns the new highlighted item and the selected item
 pub fn menu(items: &Vec<&Button>, mut highlighted: Option<usize>, input: &Vec<Input>) -> (Option<usize>, Option<usize>) {
-    let mouse_position = input.iter().filter(|input| match **input {
-        Input::MouseMotion(_) => true,
-        _ => false,
-    }).map(|input| match *input {
-        Input::MouseMotion(position) => position,
-        _ => panic!("Shouldn't be anything but MouseMotion in this list..."),
+    let mouse_position = input.iter().filter_map(|input| match *input {
+        Input::MouseMotion(position) => Some(position),
+        _ => None,
     }).last();
 
     let mut mouse_highlighted = None;
