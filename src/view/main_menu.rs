@@ -145,7 +145,7 @@ impl View for MainMenuView {
         }
     }
 
-    fn update(&mut self, context: &mut Context, input: Vec<Input>, elapsed_ns: i64) -> (Option<ViewAction>, Vec<Input>) {
+    fn update(&mut self, context: &mut Context, input: Vec<Input>, _: i64) -> (Option<ViewAction>, Vec<Input>) {
         if self.in_child_view {
             if input.iter().find(|input| **input == Input::Pause).is_some() {
                 self.in_child_view = false;
