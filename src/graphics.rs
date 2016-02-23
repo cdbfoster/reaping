@@ -58,6 +58,38 @@ impl GraphicRenderer {
     }
 }
 
+pub struct RelativeCoordinator {
+    screen_size: Vector2,
+}
+
+impl RelativeCoordinator {
+    pub fn new(screen_size: Vector2) -> RelativeCoordinator {
+        RelativeCoordinator {
+            screen_size: screen_size,
+        }
+    }
+
+    /// Returns the value relative to the width of the screen
+    pub fn width(&self, value: f32) -> f32 {
+        self.screen_size.x * value
+    }
+
+    /// Returns the value relative to the height of the screen
+    pub fn height(&self, value: f32) -> f32 {
+        self.screen_size.y * value
+    }
+
+    /// Returns the X coordinate of an object of width pixels, when centered horizontally
+    pub fn center_width(&self, width: f32) -> f32 {
+        (self.screen_size.x - width) / 2.0
+    }
+
+    /// Returns the Y coordinate of an object of height pixels, when centered vertically
+    pub fn center_height(&self, height: f32) -> f32 {
+        (self.screen_size.y - height) / 2.0
+    }
+}
+
 #[derive(Clone)]
 pub struct Sprite {
     pub transform: Transform,

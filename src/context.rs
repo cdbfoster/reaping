@@ -21,7 +21,8 @@ use sdl2;
 use sdl2_image;
 use sdl2_ttf;
 
-use graphics::FontRenderer;
+use graphics::{FontRenderer, RelativeCoordinator};
+use math::Vector2;
 
 pub struct Context {
     pub sdl_context: sdl2::Sdl,
@@ -32,6 +33,9 @@ pub struct Context {
     pub sdl_image_context: sdl2_image::Sdl2ImageContext,
 
     pub font_renderer: FontRenderer,
+
+    pub screen_size: Vector2,
+    pub rel: RelativeCoordinator,
 
     pub fps: u32,
 }
@@ -65,6 +69,13 @@ impl Context {
             FontRenderer::new(sdl_ttf_context)
         };
 
+        let screen_size = {
+            let (width, height) = sdl_renderer.logical_size();
+            Vector2::new(width as f32, height as f32)
+        };
+
+        let rel = RelativeCoordinator::new(screen_size);
+
         Context {
             sdl_context: sdl_context,
             sdl_event_pump: sdl_event_pump,
@@ -74,6 +85,9 @@ impl Context {
             sdl_image_context: sdl_image_context,
 
             font_renderer: font_renderer,
+
+            screen_size: screen_size,
+            rel: rel,
 
             fps: 0,
         }
