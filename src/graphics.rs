@@ -143,10 +143,10 @@ impl Sprite {
         }
     }
 
-    pub fn from_file(context: &Context, path: &str) -> Option<Sprite> {
+    pub fn from_file(context: &Context, path: &str) -> Sprite {
         match context.sdl_renderer.load_texture(Path::new(path)).ok() {
-            Some(texture) => Some(Sprite::new(texture, None, None)),
-            None => None,
+            Some(texture) => Sprite::new(texture, None, None),
+            None => panic!("Could not load sprite {}!", path),
         }
     }
 
