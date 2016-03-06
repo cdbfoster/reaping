@@ -189,7 +189,7 @@ impl Rectangle {
     /// horizontal or vertical flip, respectively.  Does not apply rotation.
     pub fn transform(&self, t: &Transform) -> (Rectangle, (bool, bool)) {
         let new_size = self.size * t.scale.abs();
-        let new_position = self.position + t.position + ((self.size - new_size) / 2.0);
+        let new_position = self.position + t.position;
 
         (
             Rectangle::new(new_position, new_size).unwrap(),

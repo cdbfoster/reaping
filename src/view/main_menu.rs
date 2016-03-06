@@ -98,8 +98,8 @@ impl MainMenuView {
 
             version: match context.font_renderer.render_sprite(context, &info_font, "v0.1", Color::RGB(255, 255, 255)) {
                 Some(mut sprite) => {
-                    sprite.transform.position.x = context.rel.height(0.008);
-                    sprite.transform.position.y = context.screen_size.y - sprite.get_output_region().get_size().y + context.rel.height(0.005);
+                    sprite.transform.position.x = sprite.get_output_region().0.get_size().x / 2.0 + context.rel.height(0.008);
+                    sprite.transform.position.y = context.screen_size.y - sprite.get_output_region().0.get_size().y / 2.0 + context.rel.height(0.005);
                     sprite
                 },
                 None => panic!("Could not render version text!"),
@@ -107,8 +107,8 @@ impl MainMenuView {
 
             author: match context.font_renderer.render_sprite(context, &info_font, "©2016 Chris Foster", Color::RGB(255, 255, 255)) {
                 Some(mut sprite) => {
-                    sprite.transform.position.x = context.screen_size.x - sprite.get_output_region().get_size().x - context.rel.height(0.008);
-                    sprite.transform.position.y = context.screen_size.y - sprite.get_output_region().get_size().y + context.rel.height(0.005);
+                    sprite.transform.position.x = context.screen_size.x - sprite.get_output_region().0.get_size().x / 2.0 - context.rel.height(0.008);
+                    sprite.transform.position.y = context.screen_size.y - sprite.get_output_region().0.get_size().y / 2.0 + context.rel.height(0.005);
                     sprite
                 },
                 None => panic!("Could not render author text!"),
@@ -240,8 +240,8 @@ impl Title {
         let text_sprite = match context.font_renderer.render_sprite(context, &title_font, "The Reaping", Color::RGB(255, 255, 255)) {
             Some(mut sprite) => {
                 sprite.transform.position = Vector2::new(
-                    context.rel.center_width(sprite.get_output_region().get_size().x),
-                    context.rel.height(0.27) - sprite.get_output_region().get_size().y / 2.0,
+                    context.rel.width(0.5),
+                    context.rel.height(0.27),
                 );
                 sprite
             },
@@ -277,8 +277,8 @@ impl MenuButton {
         let text_sprite = match context.font_renderer.render_sprite(context, &menu_font, text, Color::RGB(255, 255, 255)) {
             Some(mut sprite) => {
                 sprite.transform.position = Vector2::new(
-                    region.position.x + (region.get_size().x - sprite.get_output_region().get_size().x) / 2.0,
-                    region.position.y + (region.get_size().y - sprite.get_output_region().get_size().y) / 2.0,
+                    region.position.x + region.get_size().x / 2.0,
+                    region.position.y + region.get_size().y / 2.0,
                 );
                 sprite
             },

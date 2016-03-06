@@ -154,16 +154,21 @@ impl Sprite {
         self.region
     }
 
-    pub fn get_output_region(&self) -> Rectangle {
-        let (rectangle, _) = self.region.transform(&self.transform);
+    pub fn get_output_region(&self) -> (Rectangle, (bool, bool)) {
+        let (mut rectangle, flip) = Rectangle::new(
+            Vector2::zero(),
+            self.region.get_size(),
+        ).unwrap().transform(&self.transform);
 
-        rectangle
+        rectangle.position = rectangle.position - rectangle.get_size() / 2.0;
+
+        (rectangle, flip)
     }
 }
 
 impl GraphicObject for Sprite {
     fn draw(&self, context: &mut Context) {
-        let (output_region, flip) = self.region.transform(&self.transform);
+        let (output_region, flip) = self.get_output_region();
 
         context.sdl_renderer.copy_ex(
             &self.sdl_texture,
@@ -223,7 +228,7 @@ impl FontRenderer {
         if let Some(sdl_font) = self.cached_fonts.get(&font) {
             return sdl_font.render(text).blended(color).ok()
                 .and_then(|surface| context.sdl_renderer.create_texture_from_surface(&surface).ok())
-                .map(|texture| Sprite::new(texture, None, None))
+                .map(|texture| Sprite::new(texture, None, None));
         } else {
             None
         }
