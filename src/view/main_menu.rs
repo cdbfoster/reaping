@@ -25,7 +25,7 @@ use graphics::{GraphicObject, Sprite};
 use input;
 use input::{Button, Input};
 use math::{Vector2, Rectangle};
-use view::{View, ViewAction, ViewData};
+use view::{GameView, View, ViewAction, ViewData};
 
 pub struct MainMenuView {
     backdrop: Backdrop,
@@ -184,15 +184,14 @@ impl View for MainMenuView {
         let view_action = match selected {
             Some(ref index) => {
                 if *index == 0 {
-                    //Some(ViewAction::SetView(GameView::new(context))
-                    None
+                    Some(ViewAction::SetView(Box::new(GameView::new(context))))
                 } else if *index == 1 {
                     self.in_child_view = true;
-                    //Some(ViewAction::AddView(OptionsView::new(context))
+                    //Some(ViewAction::AddView(OptionsView::new(context)))
                     None
                 } else if *index == 2 {
                     self.in_child_view = true;
-                    //Some(ViewAction::AddView(LeaderboardsView::new(context))
+                    //Some(ViewAction::AddView(LeaderboardsView::new(context)))
                     None
                 } else {
                     Some(ViewAction::ExitGame)

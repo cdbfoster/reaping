@@ -41,6 +41,8 @@ pub enum ViewAction {
     ExitGame,
 }
 
+pub use self::game::GameView;
 pub use self::main_menu::MainMenuView;
 
+mod game;
 mod main_menu;
